@@ -59,6 +59,9 @@ if (Char_Names %in% c(
 # Select year
 Model_Year <- 2023
 
+# Do you want to make plots?
+To_Plot = 1 # 1=yes, 0=no
+
 
 #### Define functions ####
 
@@ -70,7 +73,7 @@ source("SoftConstraintsFunc.R")
 
 
 #### Run Functions ####
-Soft_Limits <- SoftConstraintsFunc(Water_Data, Site_Names, Char_Names, distribution, Model_Year)
+Soft_Limits <- SoftConstraintsFunc(Water_Data, Site_Names, Char_Names, distribution, Model_Year, To_Plot)
 
 ###### Figure out which data sets have enough data #####
 
