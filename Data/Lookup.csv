@@ -1,0 +1,39 @@
+SoftConstraints_name,CharacteristicName,Type
+Location_ID,MonitoringLocationIdentifier,NA
+Month,Month,NA
+low_water_temperature,"Temperature, water",low
+high_water_temperature,"Temperature, water",high
+low_barometric_pressure,Barometric pressure,low
+high_barometric_pressure,Barometric pressure,high
+low_conductivity,Conductivity,low
+high_conductivity,Conductivity,high
+low_specific_conductance,Specific conductance,low
+high_specific_conductance,Specific conductance,high
+low_turbidity,Turbidity,low
+high_turbidity,Turbidity,high
+low_salinity,Salinity,low
+high_salinity,Salinity,high
+low_ph,pH,low
+high_ph,pH,high
+low_do_concentration,Dissolved oxygen (DO),low
+high_do_concentration,Dissolved oxygen (DO),high
+low_do_saturation,Dissolved oxygen saturation,low
+high_do_saturation,Dissolved oxygen saturation,high
+low_wetted_width,Wetted Width,low
+high_wetted_width,Wetted Width,high
+low_discharge,Base flow discharge,low
+high_discharge,Base flow discharge,high
+low_mean_velocity,RBP Stream Velocity,low
+high_mean_velocity,RBP Stream Velocity,high
+low_mean_crossection_depth,Cross-Section Depth,low
+high_mean_crossection_depth,Cross-Section Depth,high
+low_anc,Acid Neutralizing Capacity (ANC),low
+high_anc,Acid Neutralizing Capacity (ANC),high
+low_tn,"Total Nitrogen, mixed forms",low
+high_tn,"Total Nitrogen, mixed forms",high
+low_tp,"Total Phosphorus, mixed forms",low
+high_tp,"Total Phosphorus, mixed forms",high
+low_tds,"Solids, Dissolved (TDS)",low
+high_tds,"Solids, Dissolved (TDS)",high
+low_air_temperature,"Temperature, air",low
+high_air_temperature,"Temperature, air",high
