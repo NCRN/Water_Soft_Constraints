@@ -1,4 +1,4 @@
-SoftConstraintsFunc <- function(Water_Data, site, water_char, distribution){
+SoftConstraintsFunc <- function(Water_Data, site, water_char, distribution, Model_Year, To_Plot){
 # This function inputs the EDD dataset and desired monitoring site, characteristic, 
 # and distribution of the data. It outputs charts and a table of soft constraints.
   
@@ -67,7 +67,7 @@ SoftConstraintsFunc <- function(Water_Data, site, water_char, distribution){
   # Create predictions
   Prediction_Data<-
     data.frame(ActivityStartDate=seq(ymd("2023-01-01"), ymd("2023-12-31"), by="days"),
-               Year=2023) %>%
+               Year=Model_Year) %>%
     mutate( Month=month(ActivityStartDate),
             DecDate=decimal_date(ActivityStartDate),
             YrFraction=decimal_date(ActivityStartDate)-Year,
@@ -85,14 +85,15 @@ SoftConstraintsFunc <- function(Water_Data, site, water_char, distribution){
     geom_ribbon(aes(ymin=Lower, ymax=Upper), fill="grey")+
     geom_line(aes(y=Median))+
     theme_bw() +
-    ggtitle(distribution)
+    ggtitle(paste(distribution, Model_Year))
   
   # Print the plots
-  windows(6.5,9)
-  print(
-    ggarrange(A,B,C, ncol=1, nrow=3)
-  )
-  
+  if (To_Plot==1){
+    windows(6.5,9)
+    print(
+      ggarrange(A,B,C, ncol=1, nrow=3)
+    )
+  }
   Soft_Limits<-Predictions %>%
     summarise(Lower=median(Lower), Upper=median(Upper), .by=Month)
   
