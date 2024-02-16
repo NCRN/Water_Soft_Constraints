@@ -26,7 +26,6 @@ Water_Data<-read_csv("C:/Data/NCRN_Water_WQX/20240129_wqp_wqx_bss_wq_npsncrn.csv
 Water_Data<-Water_Data %>% filter(MonitoringLocationIdentifier=="NCRN_CATO_BGHC")
 
 
-
 #### Check how much data is in each Stream X Characteristic Combo. Reomve from analysis if <20
 Data_Count<-Water_Data %>% 
   summarise(Records=n(), YearMin=min(year(ActivityStartDate)),YearMax=max(year(ActivityStartDate)), .by=c(MonitoringLocationIdentifier,CharacteristicName)) %>% 
