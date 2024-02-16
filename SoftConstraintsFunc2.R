@@ -9,14 +9,6 @@ SoftConstraintsFunc <- function(Water_Data, site, water_char, distribution, Mode
     select(MonitoringLocationIdentifier,ActivityStartDate,CharacteristicName,ResultMeasureValue  ) %>% 
     mutate(ResultMeasureValue=as.numeric(ResultMeasureValue))
   
-  # nrow(Demo_Data)
-  # 
-  # Demo_Data %>% pull(ActivityStartDate) %>% unique %>% length()
-  # 
-  # Demo_Data %>% filter(is.na(ResultMeasureValue))
-  
-
-
 
   Demo_Data<-Demo_Data %>%
     mutate(Year=year(ActivityStartDate),
@@ -26,8 +18,7 @@ SoftConstraintsFunc <- function(Water_Data, site, water_char, distribution, Mode
            Date_cos=cos(2*pi*YrFraction),
            Date_sin=sin(2*pi*YrFraction))
 
-  # Gamma
-  # if (distribution=="gamma"){
+
   DO_Model<-brm(ResultMeasureValue~s(DecDate, k=4) + s(Date_cos,Date_sin, k=4),
                 data = Demo_Data,
                 family=switch(distribution,
@@ -39,31 +30,7 @@ SoftConstraintsFunc <- function(Water_Data, site, water_char, distribution, Mode
                   warmup=500,
                   iter=2000,
     )
-  # }
-
-  # # Gaussian
-  # if (distribution=="gaussian"){
-  #   DO_Model<-brm(ResultMeasureValue~s(DecDate, k=4) + s(Date_cos,Date_sin, k=4),
-  #                 data = Demo_Data,
-  #                 family=gaussian(),
-  #                 chains = 4,
-  #                 cores=4,
-  #                 control = list(adapt_delta = 0.99, max_treedepth=15),
-  #                 warmup=500,
-  #                 iter=2000,
-  #   )
-  # }
-
-
-  # Create predictions
-  # Prediction_Data<-
-  #   data.frame(ActivityStartDate=seq(ymd("2023-01-01"), ymd("2023-12-31"), by="days"),
-  #              Year=Model_Year) %>%
-  #   mutate( Month=month(ActivityStartDate),
-  #           DecDate=decimal_date(ActivityStartDate),
-  #           YrFraction=decimal_date(ActivityStartDate)-Year,
-  #           Date_cos=cos(2*pi*YrFraction),
-  #           Date_sin=sin(2*pi*YrFraction))
+  
   
   Prediction_Data<-
     data.frame(ActivityStartDate=seq(ymd(paste(min(Model_Year),"-01-01")), 
