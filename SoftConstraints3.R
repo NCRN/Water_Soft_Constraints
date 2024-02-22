@@ -6,7 +6,7 @@ library(ggpubr)
 library(tidybayes)
 
 # Source function
-source("SoftConstraintsFunc2.R")
+source("SoftConstraintsFunc3.R")
 
 #### Read in data and filter only the needed columnst and rows. Eliminate rows with NA for result values
 
@@ -49,11 +49,17 @@ Data_Count <-Data_Count %>%
 
 Water_Data<-Water_Data %>% semi_join(Data_Count)
 
-calcLimits<-function(Water_Data,MonitoringLocationIdentifier, CharacteristicName,distribution, YearMin,YearMax ){
+# Create ticker (experimental)
+Data_Count$ticker <- 1:nrow(Data_Count)
+total_runs <- nrow(Data_Count)
+start_time <- Sys.time()
+print("Started:"); print(start_time)
+
+calcLimits<-function(Water_Data,MonitoringLocationIdentifier, CharacteristicName,distribution, YearMin,YearMax, ticker, total_runs){
   
   SoftConstraintsFunc(Water_Data=Water_Data, site=MonitoringLocationIdentifier, 
                       water_char=CharacteristicName, distribution = distribution,
-                      Model_Year=YearMin:YearMax, To_Plot=F)
+                      Model_Year=YearMin:YearMax, ticker=ticker, total_runs=total_runs,To_Plot=F) # DM added ticker and total runs
   
 }
 
@@ -62,7 +68,8 @@ Limit_List<-pmap(.l=list(Water_Data=list(Water_Data ),
                          CharacteristicName=Data_Count$CharacteristicName,
                          distribution=Data_Count$distribution,
                          YearMin=Data_Count$YearMin,
-                         YearMax=Data_Count$YearMax),
+                         YearMax=Data_Count$YearMax,
+                         ticker=Data_Count$ticker, total_runs=total_runs), # DM added ticker and total runs
                  .f=calcLimits)
 
 
@@ -70,3 +77,7 @@ Output_Limits<-bind_rows(Limit_List)
 
 write_csv(Output_Limits, "Soft_Constraints.csv")
 
+end_time <- Sys.time()
+print("Started:"); print(start_time)
+print("Finished:"); end_time
+print("Time spent:"); end_time-start_time
