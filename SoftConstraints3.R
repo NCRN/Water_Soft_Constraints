@@ -78,7 +78,7 @@ for (i in 1:length(site_names)){
   
   Output_Limits<-bind_rows(Limit_List)
   
-  write_csv(Output_Limits, paste("Soft_Constraints_", site_names[i], ".csv"))
+  write_csv(Output_Limits, paste("Soft constraints files/Soft_Constraints_", site_names[i], ".csv"))
   
   end_time <- Sys.time()
   print(site_names[i])
@@ -90,3 +90,12 @@ for (i in 1:length(site_names)){
 
 # After all the sites are finished, you can just combine the individual Soft_Constraints csv's
 # into one long one.
+csv_data_all <- data.frame()
+setwd("Soft constraints files/")
+files <- dir()
+for (i in 1:length(files)){
+  csv_data <- read.csv(files[i])
+  csv_data_all <- rbind(csv_data_all, csv_data)
+}
+head(csv_data_all)
+write.csv(csv_data_all, "SoftConstraints_from_models.csv")
